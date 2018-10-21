@@ -9,22 +9,12 @@ var urlSchema = new Schema({
          required: true},
   shortUrl: {type: Number}
 });
-var Url = mongoose.model('url', urlSchema);
-
-
-var saveUrl = function(url, done) {
-
-  url.save(function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-
-};
+var UrlModel = mongoose.model('url', urlSchema);
 
 
 var findUrlById = function(UrlId, done) {
   
-  Url.findById(UrlId, function(err, data) {
+  UrlModel.findById(UrlId, function(err, data) {
     if (err) return done(err);
     return done(null, data);
   });
@@ -32,6 +22,5 @@ var findUrlById = function(UrlId, done) {
 };
 
 
-exports.UrlModel = Url;
-exports.saveUrl = saveUrl;
+exports.UrlModel = UrlModel;
 exports.findUrlById = findUrlById;

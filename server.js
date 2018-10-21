@@ -33,15 +33,15 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-var Url = require('./myApp.js').UrlModel;
 
+var UrlModel = require('./myApp.js').UrlModel;
 app.post("/api/shorturl/new", function (req, res, next) {
   
   // 1. this gives url back directly from post
   // res.json({ url: req.body });
   
   // 2. this creates url using schema and returns created url
-  // var newUrl = new Url({
+  // var newUrl = new UrlModel({
   //   longUrl: req.body.url,
   //   shortUrl: 1
   // });
@@ -49,7 +49,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
 
   // 3. this does same but increments the count - asynchronous so done in callback
   // Url.count({}, function(err, count) {
-  //   var newUrl = new Url({
+  //   var newUrl = new UrlModel({
   //     longUrl: req.body.url,
   //     shortUrl: count+1
   //   });
@@ -58,7 +58,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
 
   // 4. same but also saves newUrl to db
   // Url.count({}, function(err, count) {
-  //   var newUrl = new Url({
+  //   var newUrl = new UrlModel({
   //     longUrl: req.body.url,
   //     shortUrl: count+1
   //   });
@@ -68,7 +68,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
   
   // // 5. same but just provide old and new url not _id
   // Url.count({}, function(err, count) {
-  //   var newUrl = new Url({
+  //   var newUrl = new UrlModel({
   //     longUrl: req.body.url,
   //     shortUrl: count+1
   //   });
@@ -82,28 +82,26 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // 6. same but with check on valid url
   const url = require('url');
   const dns = require('dns');
-  //const postedUrl = new URL(req.body.url, req.body.url.value);
   const postedUrl = url.parse(req.body.url);
   dns.lookup(postedUrl.hostname, (err, address, family) => {
     if (!address) {
-      // res.json({ error: "invalid URL" });
       res.json({
-        error: "invalid URL",
-        address: address,
-        url: req.body.url,
-        error: err
+        // address: address,
+        // url: req.body.url,
+        // errorType: err,
+        error: "invalid URL"
       });
     } else {
-      Url.count({}, function(err, count) {
-        var newUrl = new Url({
+      UrlModel.count({}, function(err, count) {
+        var newUrl = new UrlModel({
           longUrl: req.body.url,
           shortUrl: count+1
         });
         newUrl.save();
         res.json({
-          lookup: postedUrl.hostname, 
-          address: address,
-          family: family,
+          // lookup: postedUrl.hostname, 
+          // address: address,
+          // family: family,
           original_url: newUrl.longUrl,
           short_url: newUrl.shortUrl
         });
@@ -111,16 +109,9 @@ app.post("/api/shorturl/new", function (req, res, next) {
     }
   });
   
-  
 });
 
-// router.post('/mongoose-model', function(req, res, next) {
-//   // try to create a new instance based on their model
-//   // verify it's correctly defined in some way
-//   var p;
-//   p = new Person(req.body);
-//   res.json(p);
-// });
+
 
 // var findById = require('./myApp.js').findUrlById;
 // app.get('/find-by-id', function(req, res, next) {
