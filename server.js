@@ -85,9 +85,11 @@ app.post("/api/shorturl/new", function (req, res, next) {
   //const postedUrl = new URL(req.body.url, req.body.url.value);
   const postedUrl = url.parse(req.body.url);
   dns.lookup(postedUrl.hostname, (err, address, family) => {
-    if (err) {
+    if (!address) {
       // res.json({ error: "invalid URL" });
       res.json({
+        error: "invalid URL",
+        address: address,
         url: req.body.url,
         error: err
       });
@@ -99,6 +101,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
         });
         newUrl.save();
         res.json({
+          lookup: postedUrl.hostname, 
           address: address,
           family: family,
           original_url: newUrl.longUrl,
