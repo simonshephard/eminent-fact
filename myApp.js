@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var urlSchema = new Schema({
   longUrl: {type: String,
          required: true},
-  shortUrl: Number
+  shortUrl: {type: Number}
 });
 var Url = mongoose.model('url', urlSchema);
 

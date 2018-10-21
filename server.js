@@ -34,7 +34,6 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
 var Url = require('./myApp.js').UrlModel;
 
 app.post("/api/shorturl/new", function (req, res, next) {
@@ -43,7 +42,10 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // res.json({ url: req.body });
   
   // 2. this creates url using schema and returns created url
-  var newUrl = new Url(req.body);
+  var newUrl = new Url({
+    longUrl: req.body,
+    shortUrl: 1
+  });
   res.json({ newUrl: newUrl });
 
   // 3. need to save url to db
