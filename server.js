@@ -42,9 +42,10 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // res.json({ url: req.body });
   
   // 2. this creates url using schema and returns created url
+  var count = Url.count();
   var newUrl = new Url({
-    longUrl: req.body,
-    shortUrl: 1
+    longUrl: req.body.url,
+    shortUrl: count
   });
   res.json({ newUrl: newUrl });
 
