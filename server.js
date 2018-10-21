@@ -80,7 +80,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // });
   
   // 6. same but with check on valid url
-  //const url = require('url');
+  const url = require('url');
   const dns = require('dns');
   //const postedUrl = new URL(req.body.url, req.body.url.value);
   const postedUrl = url.parse(req.body.url);
