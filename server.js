@@ -67,25 +67,40 @@ app.post("/api/shorturl/new", function (req, res, next) {
   //   res.json({ newUrl: newUrl });
   // });
   
-  // 5. same but just provide old and new url not _id
-  Url.count({}, function(err, count) {
-    var newUrl = new Url({
-      longUrl: req.body.url,
-      shortUrl: count+1
-    });
-    newUrl.save();
-    res.json({
-      original_url: newUrl.longUrl,
-      short_url: newUrl.shortUrl
-    });
-  });
+  // // 5. same but just provide old and new url not _id
+  // Url.count({}, function(err, count) {
+  //   var newUrl = new Url({
+  //     longUrl: req.body.url,
+  //     shortUrl: count+1
+  //   });
+  //   newUrl.save();
+  //   res.json({
+  //     original_url: newUrl.longUrl,
+  //     short_url: newUrl.shortUrl
+  //   });
+  // });
   
+  // 6. same but with check on valid url
   const dns = require('dns');
-  dns.lookup(req.get('Host'), (err, address, family) => {
+  // dns.lookup(req.get('Host'), (err, address, family) => {
+  dns.lookup(req.body.url, (err, address, family) => {
     if (err) {
+      res.json({ error: "invalid URL" });
     } else {
-      
-    console.log('address: %j family: IPv%s', address, family)
+      Url.count({}, function(err, count) {
+        var newUrl = new Url({
+          longUrl: req.body.url,
+          shortUrl: count+1
+        });
+        newUrl.save();
+        res.json({
+          address: address,
+          family: family,
+          original_url: newUrl.longUrl,
+          short_url: newUrl.shortUrl
+        });
+      });      
+    }
   });
   
   
