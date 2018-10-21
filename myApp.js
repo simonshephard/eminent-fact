@@ -13,8 +13,14 @@ var shortUrlSchema = new Schema({
 var ShortUrl = mongoose.model('ShortUrl', shortUrlSchema);
 
 
+var saveShortUrl = function(shortUrl, done) {
 
-var createAndSaveShortUrl;
+  shortUrl.save(function(err, data) {
+    if (err) return done(err);
+    return done(null, data);
+  });
+
+};
 
 
 var findUrlById = function(UrlId, done) {
