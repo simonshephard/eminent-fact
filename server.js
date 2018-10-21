@@ -58,17 +58,28 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // });
 
   // 4. same but also saves newUrl to db
+  // Url.count({}, function(err, count) {
+  //   var newUrl = new Url({
+  //     longUrl: req.body.url,
+  //     shortUrl: count+1
+  //   });
+  //   newUrl.save();
+  //   res.json({ newUrl: newUrl });
+  // });
+  
+  // 5. same but just provide old and new url not _id
   Url.count({}, function(err, count) {
     var newUrl = new Url({
       longUrl: req.body.url,
       shortUrl: count+1
     });
     newUrl.save();
-    res.json({ newUrl: newUrl });
+    res.json({
+      original_url: newUrl.longUrl,
+      short_url: newUrl.shortUrl
+    });
   });
-  
-  // 4. then finally return url and short=id
-  
+    
 });
 
 // router.post('/mongoose-model', function(req, res, next) {
