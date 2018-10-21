@@ -9,6 +9,10 @@ var cors = require('cors');
 
 var app = express();
 
+const url = require('url');
+const dns = require('dns');
+
+
 // Basic Configuration 
 var port = process.env.PORT || 3000;
 
@@ -80,8 +84,6 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // });
   
   // 6. same but with check on valid url
-  const url = require('url');
-  const dns = require('dns');
   const postedUrl = url.parse(req.body.url);
   dns.lookup(postedUrl.hostname, (err, address, family) => {
     if (!address) {
@@ -115,24 +117,14 @@ app.post("/api/shorturl/new", function (req, res, next) {
 var findUrlByShortUrl = require('./myApp.js').findUrlByShortUrl;
 app.get("/api/shorturl/:shortUrl", function (req, res) {
   findUrlByShortUrl(req.params.shortUrl, function(err, data) {
-
+    res.json({
+      return: data,
+      url: data.longUrl,
+      parsed: url.parse(data.longUrl)
+    });
+    // res.redirect(url.parse(data.longUrl));
   });
 });
-
-
-app.get('/api/shorturl/:shortURl', function(req, res, err) {
-  if(err) { return err; }
-  findUrlByShortUrl(pers._id, function(err, data) {
-      clearTimeout(t);
-      if(err) { return next(err) }
-      if(!data) {
-        console.log('Missing `done()` argument');
-        return next({message: 'Missing callback argument'});
-      }
-      res.json(data);
-      p.remove();
-    });
-  });
 
 
 
