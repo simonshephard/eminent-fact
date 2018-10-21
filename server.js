@@ -79,7 +79,16 @@ app.post("/api/shorturl/new", function (req, res, next) {
       short_url: newUrl.shortUrl
     });
   });
-    
+  
+  const dns = require('dns');
+  dns.lookup(req.get('Host'), (err, address, family) => {
+    if (err) {
+    } else {
+      
+    console.log('address: %j family: IPv%s', address, family)
+  });
+  
+  
 });
 
 // router.post('/mongoose-model', function(req, res, next) {
