@@ -117,16 +117,32 @@ app.post("/api/shorturl/new", function (req, res, next) {
 var findUrlByShortUrl = require('./myApp.js').findUrlByShortUrl;
 app.get("/api/shorturl/:shortUrl", function (req, res) {
   findUrlByShortUrl(req.params.shortUrl, function(err, data) {
-    res.json({
-      return: data,
-      url: data.longUrl,
-      parsed: url.parse(data.longUrl)
-    });
-    // res.redirect(url.parse(data.longUrl));
+    // res.json({
+    //   return: data,
+    //   url: data[0].longUrl,
+    //   parsed: url.parse(data[0].longUrl),
+    //   href: url.parse(data[0].longUrl).href
+    // });
+    // res.redirect(url.parse(data[0].longUrl).href);
+    res.redirect(data[0].longUrl);
   });
 });
 
-
+// EXAMPLE parsed url
+// "parsed": {
+//   "protocol": "https:",
+//   "slashes": true,
+//   "auth": null,
+//   "host": "www.freecodecamp.com",
+//   "port": null,
+//   "hostname": "www.freecodecamp.com",
+//   "hash": null,
+//   "search": null,
+//   "query": null,
+//   "pathname": "/",
+//   "path": "/",
+//   "href": "https://www.freecodecamp.com/"
+// }
 
 app.listen(port, function () {
   console.log('Node.js listening ...');
