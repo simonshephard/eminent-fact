@@ -35,8 +35,13 @@ app.get("/api/hello", function (req, res) {
 });
 
 
-app.post("/api/shorturl/new", function (req, res) {
-  res.json({"url": req.params[0]});
+app.post("/api/shorturl/new", function (req, res, next) {
+  // this gives url
+  res.json({ url: req.body });
+  // save url
+  
+  // return url and short=id
+  
 });
 
 
