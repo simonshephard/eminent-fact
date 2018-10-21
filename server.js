@@ -83,8 +83,8 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // 6. same but with check on valid url
   const dns = require('dns');
   // dns.lookup(req.get('Host'), (err, address, family) => {
-  const myURL = new URL(req.body.url);
-  dns.lookup(req.body.url, (err, address, family) => {
+  const url = new URL(req.body.url);
+  dns.lookup(url, (err, address, family) => {
     if (err) {
       // res.json({ error: "invalid URL" });
       res.json({
@@ -107,7 +107,6 @@ app.post("/api/shorturl/new", function (req, res, next) {
       });      
     }
   });
-});
   
   
 });
