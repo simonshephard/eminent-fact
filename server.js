@@ -1,5 +1,12 @@
 'use strict';
 
+// this achieves objectives but could do with refactoring
+// lots of development notes retained
+// a few approaches inconsistent and likely not best practice
+// the short url is based on count of urls in database
+// currently cannot delete but if you could then this would no longer be quaranteed unique
+// and parsing of urls is limited - full http(s) required to be entered or else invalid
+
 var express = require('express');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
