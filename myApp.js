@@ -2,20 +2,17 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
 
-// set up scheme for shortUrl
+// set up scheme for shortrl
 var Schema = mongoose.Schema;
-var shortUrlSchema = new Schema({
-  longUrl: {type: String,
-         required: true},
-  shortUrl: {type: String,
+var urlSchema = new Schema({
+  url: {type: String,
          required: true}
 });
-var ShortUrl = mongoose.model('ShortUrl', shortUrlSchema);
+var url = mongoose.model('url', urlSchema);
 
+var saveUrl = function(url, done) {
 
-var saveShortUrl = function(shortUrl, done) {
-
-  shortUrl.save(function(err, data) {
+  url.save(function(err, data) {
     if (err) return done(err);
     return done(null, data);
   });
@@ -25,7 +22,7 @@ var saveShortUrl = function(shortUrl, done) {
 
 var findUrlById = function(UrlId, done) {
   
-  ShortUrl.findById(UrlId, function(err, data) {
+  url.findById(UrlId, function(err, data) {
     if (err) return done(err);
     return done(null, data);
   });
