@@ -8,7 +8,7 @@ var urlSchema = new Schema({
   url: {type: String,
          required: true}
 });
-var url = mongoose.model('url', urlSchema);
+var Url = mongoose.model('url', urlSchema);
 
 
 var saveUrl = function(url, done) {
@@ -23,7 +23,7 @@ var saveUrl = function(url, done) {
 
 var findUrlById = function(UrlId, done) {
   
-  url.findById(UrlId, function(err, data) {
+  Url.findById(UrlId, function(err, data) {
     if (err) return done(err);
     return done(null, data);
   });
@@ -31,6 +31,6 @@ var findUrlById = function(UrlId, done) {
 };
 
 
-exports.url = url;
+exports.UrlModel = Url;
 exports.saveUrl = saveUrl;
 exports.findUrlById = findUrlById;

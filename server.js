@@ -35,15 +35,27 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+var Url = require('./myApp.js').UrlModel;
+
 app.post("/api/shorturl/new", function (req, res, next) {
   // this gives url
-  res.json({ url: req.body });
+  // res.json({ url: req.body });
+  // create url
+  var newUrl = new Url(req.body);
   // save url
-  
+  // *****
   // return url and short=id
+  res.json({ newUrl: newUrl });
   
 });
 
+// router.post('/mongoose-model', function(req, res, next) {
+//   // try to create a new instance based on their model
+//   // verify it's correctly defined in some way
+//   var p;
+//   p = new Person(req.body);
+//   res.json(p);
+// });
 
 // var findById = require('./myApp.js').findUrlById;
 // app.get('/find-by-id', function(req, res, next) {
