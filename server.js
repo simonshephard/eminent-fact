@@ -48,16 +48,26 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // });
   // res.json({ newUrl: newUrl });
 
-  // 3. this does same but increments the count
-  Url.count({}, function(err, count) {
-    count;
-  });
+  // 3. this does same but increments the count - asynchronous so done in callback
+  // Url.count({}, function(err, count) {
+  //   var newUrl = new Url({
+  //     longUrl: req.body.url,
+  //     shortUrl: count+1
+  //   });
+  //   res.json({ newUrl: newUrl });
+  // });
 
-  // 3. need to save url to db
-  // *****
+  // 4. same but also saves newUrl to db
+  Url.count({}, function(err, count) {
+    var newUrl = new Url({
+      longUrl: req.body.url,
+      shortUrl: count+1
+    });
+    newUrl.save();
+    res.json({ newUrl: newUrl });
+  });
   
   // 4. then finally return url and short=id
-  res.json({ newUrl: newUrl });
   
 });
 
