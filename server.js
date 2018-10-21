@@ -5,7 +5,6 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-
 var cors = require('cors');
 
 var app = express();
@@ -83,8 +82,7 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // 6. same but with check on valid url
   const url = require('url');
   const dns = require('dns');
-  // dns.lookup(req.get('Host'), (err, address, family) => {
-  const postedUrl = new URL(req.body.url);
+  const postedUrl = new URL(req.body.url, req.body.url.value);
   dns.lookup(postedUrl.hostname, (err, address, family) => {
     if (err) {
       // res.json({ error: "invalid URL" });
