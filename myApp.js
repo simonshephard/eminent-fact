@@ -5,8 +5,9 @@ mongoose.connect(process.env.MONGO_URI);
 // set up schema for url
 var Schema = mongoose.Schema;
 var urlSchema = new Schema({
-  url: {type: String,
-         required: true}
+  longUrl: {type: String,
+         required: true},
+  shortUrl: Number
 });
 var Url = mongoose.model('url', urlSchema);
 

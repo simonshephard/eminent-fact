@@ -38,13 +38,18 @@ app.get("/api/hello", function (req, res) {
 var Url = require('./myApp.js').UrlModel;
 
 app.post("/api/shorturl/new", function (req, res, next) {
-  // this gives url
+  
+  // 1. this gives url back directly from post
   // res.json({ url: req.body });
-  // create url
+  
+  // 2. this creates url using schema and returns created url
   var newUrl = new Url(req.body);
-  // save url
+  res.json({ newUrl: newUrl });
+
+  // 3. need to save url to db
   // *****
-  // return url and short=id
+  
+  // 4. then finally return url and short=id
   res.json({ newUrl: newUrl });
   
 });
