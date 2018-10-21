@@ -85,7 +85,8 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // dns.lookup(req.get('Host'), (err, address, family) => {
   dns.lookup(req.body.url, (err, address, family) => {
     if (err) {
-      res.json({ error: "invalid URL" });
+      // res.json({ error: "invalid URL" });
+      res.json({ error: req.body.url });
     } else {
       Url.count({}, function(err, count) {
         var newUrl = new Url({
