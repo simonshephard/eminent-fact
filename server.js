@@ -42,12 +42,16 @@ app.post("/api/shorturl/new", function (req, res, next) {
   // res.json({ url: req.body });
   
   // 2. this creates url using schema and returns created url
-  var count = Url.count();
-  var newUrl = new Url({
-    longUrl: req.body.url,
-    shortUrl: count
+  // var newUrl = new Url({
+  //   longUrl: req.body.url,
+  //   shortUrl: 1
+  // });
+  // res.json({ newUrl: newUrl });
+
+  // 3. this does same but increments the count
+  Url.count({}, function(err, count) {
+    count;
   });
-  res.json({ newUrl: newUrl });
 
   // 3. need to save url to db
   // *****
