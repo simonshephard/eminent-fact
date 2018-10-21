@@ -2,13 +2,14 @@ var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
 
-// set up scheme for shortrl
+// set up schema for url
 var Schema = mongoose.Schema;
 var urlSchema = new Schema({
   url: {type: String,
          required: true}
 });
 var url = mongoose.model('url', urlSchema);
+
 
 var saveUrl = function(url, done) {
 
@@ -30,6 +31,6 @@ var findUrlById = function(UrlId, done) {
 };
 
 
-exports.ShortUrlModel = ShortUrl;
-exports.createAndSaveShortUrl = createAndSaveShortUrl;
+exports.url = url;
+exports.saveUrl = saveUrl;
 exports.findUrlById = findUrlById;
