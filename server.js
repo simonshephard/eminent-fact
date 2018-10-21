@@ -112,21 +112,17 @@ app.post("/api/shorturl/new", function (req, res, next) {
 });
 
 
-app.get("/api/shorturl/:shortURl", function (req, res) {
-  let date = new Date(req.params.date_string);
-  res.json({
-    "unix": date.getTime(), "utc": date.toUTCString()
+var findUrlByShortUrl = require('./myApp.js').findUrlByShortUrl;
+app.get("/api/shorturl/:shortUrl", function (req, res) {
+  findUrlByShortUrl(req.params.shortUrl, function(err, data) {
+
   });
 });
 
 
-// var findById = require('./myApp.js').findUrlById;
-app.get('/:id', function(req, res, next) {
-  // var t = setTimeout(() => { next({message: 'timeout'}) }, timeout);
-  // var p = new Person({name: 'test', age: 0, favoriteFoods: ['none']});
-  // p.save(function(err, pers) {
-    if(err) { return next(err) }
-    findById(pers._id, function(err, data) {
+app.get('/api/shorturl/:shortURl', function(req, res, err) {
+  if(err) { return err; }
+  findUrlByShortUrl(pers._id, function(err, data) {
       clearTimeout(t);
       if(err) { return next(err) }
       if(!data) {

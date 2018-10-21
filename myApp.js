@@ -13,23 +13,12 @@ var UrlModel = mongoose.model('url', urlSchema);
 
 
 var findUrlByShortUrl = function(shortUrl, done) {
-  
-  UrlModel.find({shortUrl: personName}, function(err, data) {
+  UrlModel.find({shortUrl: shortUrl}, function(err, data) {
     if (err) return done(err);
     return done(null, data);
   });
-
-};
-
-var findUrlById = function(UrlId, done) {
-  
-  UrlModel.findById(UrlId, function(err, data) {
-    if (err) return done(err);
-    return done(null, data);
-  });
-  
 };
 
 
 exports.UrlModel = UrlModel;
-exports.findUrlById = findUrlById;
+exports.findUrlByShortUrl = findUrlByShortUrl;
